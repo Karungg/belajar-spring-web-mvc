@@ -10,6 +10,7 @@ import belajarspringwebmvc.belajar_spring_web_mvc.service.HelloService;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
 public class HelloController {
@@ -18,8 +19,8 @@ public class HelloController {
     private HelloService helloService;
 
     @RequestMapping(path = "/hello", method = RequestMethod.GET)
-    public void helloWorld(HttpServletRequest request, HttpServletResponse response) throws IOException {
-        String name = request.getParameter("name");
+    public void helloWorld(@RequestParam(name = "name", required = false) String name, HttpServletRequest request,
+            HttpServletResponse response) throws IOException {
         String responseBody = helloService.hello(name);
 
         response.getWriter().println(responseBody);
