@@ -29,7 +29,7 @@ public class UploadControllerTest {
                                 .param("name", "Miftah")
                                 .contentType(MediaType.MULTIPART_FORM_DATA))
                                 .andExpectAll(status().isOk(), content().string(Matchers.containsString(
-                                                "Success save profile Miftah to upload to upload/profile.jpeg")));
+                                                "Success save profile Miftah to upload/profile.jpeg")));
         }
 
 }
