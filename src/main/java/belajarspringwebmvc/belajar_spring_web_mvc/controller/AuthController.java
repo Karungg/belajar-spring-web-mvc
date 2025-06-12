@@ -7,19 +7,34 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import jakarta.servlet.http.Cookie;
+import jakarta.servlet.http.HttpServletResponse;
+
+import org.springframework.web.bind.annotation.CookieValue;
+import org.springframework.web.bind.annotation.GetMapping;
+
 @Controller
 public class AuthController {
 
     @PostMapping(path = "/auth/login", consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE)
     public ResponseEntity<String> login(
             @RequestParam(name = "username") String username,
-            @RequestParam(name = "password") String password) {
+            @RequestParam(name = "password") String password,
+            HttpServletResponse servletResponse) {
 
         if (username.equals("miftah") && password.equals("rahasia")) {
+            Cookie cookie = new Cookie("username", username);
+            cookie.setPath("/");
+            servletResponse.addCookie(cookie);
             return ResponseEntity.ok().body("OK");
         } else {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("KO");
         }
+    }
+
+    @GetMapping("/auth/user")
+    public ResponseEntity<String> getUser(@CookieValue(name = "username") String username) {
+        return ResponseEntity.ok().body("Hello " + username);
     }
 
 }
