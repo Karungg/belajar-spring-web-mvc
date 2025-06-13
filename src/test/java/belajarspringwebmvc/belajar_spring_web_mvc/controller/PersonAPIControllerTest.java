@@ -35,13 +35,14 @@ public class PersonAPIControllerTest {
                 CreatePersonRequest request = new CreatePersonRequest();
                 request.setFirstName("Miftah");
                 request.setLastName("Fadilah");
+                request.setEmail("yahaha@gmail.com");
+                request.setAge("99");
+                request.setPhone("0812345678");
                 request.setAddress(new CreateAddressRequest());
                 request.getAddress().setCity("Ciherang");
                 request.getAddress().setCountry("Indonesia");
                 request.getAddress().setPostalCode("120120");
                 request.getAddress().setStreet("Jalan yahaha");
-                request.setAge("99");
-                request.setEmail("yahaha@gmail.com");
                 request.setHobbies(List.of("Coding", "Game"));
                 request.setSocialMedias(new ArrayList<CreateSocialMediasRequest>());
                 request.getSocialMedias().add(new CreateSocialMediasRequest("Facebook", "miftahfadilah71"));
@@ -60,15 +61,9 @@ public class PersonAPIControllerTest {
         @Test
         void testErrorCreatePerson() throws Exception {
                 CreatePersonRequest request = new CreatePersonRequest();
-                request.setFirstName("Miftah");
-                request.setLastName("Fadilah");
                 request.setAddress(new CreateAddressRequest());
-                request.getAddress().setCity("Ciherang");
-                request.getAddress().setCountry("Indonesia");
                 request.getAddress().setPostalCode("120120");
                 request.getAddress().setStreet("Jalan yahaha");
-                request.setAge("99");
-                request.setEmail("yahaha@gmail.com");
                 request.setHobbies(List.of("Coding", "Game"));
                 request.setSocialMedias(new ArrayList<CreateSocialMediasRequest>());
                 request.getSocialMedias().add(new CreateSocialMediasRequest("Facebook", "miftahfadilah71"));
@@ -80,8 +75,7 @@ public class PersonAPIControllerTest {
                                                 .contentType(MediaType.APPLICATION_JSON_VALUE)
                                                 .content(objectMapper.writeValueAsString(request)))
                                 .andExpectAll(
-                                                status().isOk(),
-                                                content().json(objectMapper.writeValueAsString(request)));
+                                                status().isBadRequest());
         }
 
 }
