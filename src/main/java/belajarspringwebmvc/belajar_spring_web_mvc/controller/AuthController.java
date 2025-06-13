@@ -7,8 +7,11 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import belajarspringwebmvc.belajar_spring_web_mvc.model.User;
 import jakarta.servlet.http.Cookie;
+import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
 
 import org.springframework.web.bind.annotation.CookieValue;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -20,11 +23,16 @@ public class AuthController {
     public ResponseEntity<String> login(
             @RequestParam(name = "username") String username,
             @RequestParam(name = "password") String password,
-            HttpServletResponse servletResponse) {
+            HttpServletResponse servletResponse,
+            HttpServletRequest servletRequest) {
 
         if (username.equals("miftah") && password.equals("rahasia")) {
+            HttpSession session = servletRequest.getSession(true);
+            session.setAttribute("user", new User(username));
+
             Cookie cookie = new Cookie("username", username);
             cookie.setPath("/");
+
             servletResponse.addCookie(cookie);
             return ResponseEntity.ok().body("OK");
         } else {
