@@ -17,17 +17,24 @@ import belajarspringwebmvc.belajar_spring_web_mvc.model.User;
 @AutoConfigureMockMvc
 public class UserControllerTest {
 
-    @Autowired
-    private MockMvc mockMvc;
+        @Autowired
+        private MockMvc mockMvc;
 
-    @Test
-    void testGetUser() throws Exception {
-        mockMvc.perform(
-                get("/user/current")
-                        .sessionAttr("user", new User("miftah")))
-                .andExpectAll(
-                        status().isOk(),
-                        content().string(Matchers.containsString("Hello miftah")));
-    }
+        @Test
+        void testGetUser() throws Exception {
+                mockMvc.perform(
+                                get("/user/current")
+                                                .sessionAttr("user", new User("miftah")))
+                                .andExpectAll(
+                                                status().isOk(),
+                                                content().string(Matchers.containsString("Hello miftah")));
+        }
+
+        @Test
+        void testInvalidGetUser() throws Exception {
+                mockMvc.perform(
+                                get("/user/current")).andExpectAll(
+                                                status().is3xxRedirection());
+        }
 
 }
