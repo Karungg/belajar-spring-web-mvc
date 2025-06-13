@@ -3,16 +3,24 @@ package belajarspringwebmvc.belajar_spring_web_mvc.controller;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 
 import belajarspringwebmvc.belajar_spring_web_mvc.model.CreatePersonRequest;
+import jakarta.validation.Valid;
 
 @Controller
 public class PersonController {
 
     @PostMapping(path = "/person", consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE)
-    public ResponseEntity<String> createPerson(@ModelAttribute CreatePersonRequest request) {
+    public ResponseEntity<String> createPerson(@ModelAttribute @Valid CreatePersonRequest request,
+            BindingResult bindingResult) {
+
+        if (!bindingResult.getAllErrors().isEmpty()) {
+            return ResponseEntity.badRequest().body("Your input is invalid");
+        }
+
         String body = """
                 Successfully create person
                 Full name : $firstName $lastName

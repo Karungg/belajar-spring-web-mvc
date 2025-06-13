@@ -2,10 +2,14 @@ package belajarspringwebmvc.belajar_spring_web_mvc.model;
 
 import java.util.List;
 
-import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Data
+@AllArgsConstructor
+@NoArgsConstructor
 public class CreatePersonRequest {
 
     private CreateAddressRequest address;
@@ -14,18 +18,18 @@ public class CreatePersonRequest {
 
     private List<String> hobbies;
 
-    @NotBlank
+    @NotNull
     private String firstName;
 
-    @NotBlank
+    @NotNull
     private String lastName;
 
-    @NotBlank
+    @NotNull
     private String email;
 
-    @NotBlank
+    @NotNull
     private String age;
 
-    @NotBlank
+    @NotNull
     private String phone;
 }
